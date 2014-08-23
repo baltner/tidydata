@@ -103,7 +103,7 @@ Note that in the last step I also had to add a column name for the
 activities column I added in the previous step. After this, each column
 is now properly labeled.
 
-## 5. Create a second, independent tidy data set with the average of each variable for each activity and each subject\#\# .
+## 5. Create a second, independent tidy data set with the average of each variable for each activity and each subject.
 
 The first task was to add the subjects to the extracted data set, as a
 separate data set (called dataset), using cbind():
