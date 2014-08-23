@@ -41,7 +41,7 @@ run_analysis <- function() {
 
         means  <- grep("mean()",features, fixed=TRUE)
         sigmas <- grep("std()" ,features, fixed=TRUE)
-        extracted=cbind(merged[means],merged[sigmas])
+        extracted <- cbind(merged[means],merged[sigmas])
 
 
 ## Use descriptive activity names to name the activities in the data set
@@ -93,6 +93,7 @@ run_analysis <- function() {
                 }
         }
         # Melt the data frame to make it easier to read
+        library(reshape2)
         tidy_means <-melt(newdata, id=c("Subject","Activity"),variable.name="Variable Name",value.name="Value")
         
         #write out the data to a file
