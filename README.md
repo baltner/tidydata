@@ -63,13 +63,13 @@ feature names (stored in the 'features' variable) and create a data
 frame with all 66 variables using R's cbind() function, storing it in a
 variable named 'extracted.' Note that the grep function requires the
 fixed=TRUE option to make an exact match with the input strings. Again I
-use R's subsetting locic to extract the specific columns from the merged
+use R's subsetting logic to extract the specific columns from the merged
 data set created in step 1.
 
 ```r
             means  <- grep("mean()",features, fixed=TRUE)
             sigmas <- grep("std()" ,features, fixed=TRUE)
-            extracted=cbind(merged[means],merged[sigmas])
+            extracted <- cbind(merged[means],merged[sigmas])
 ```
 
 ## 3. Use descriptive activity names to name the activities in the data set
@@ -79,9 +79,9 @@ then convert to descriptive labels and add the labels as the first
 column in the data set using cbind() again:
 
 ```r
-        activities <- c(activities_train, activities_test)
-            activities <- as.character(labels[activities])
-            extracted<-cbind(activities,extracted)
+	activities <- c(activities_train, activities_test)
+	activities <- as.character(labels[activities])
+	extracted<-cbind(activities,extracted)
 ```
 
 Note here that the activity data is just a series of ordinal numbers. To
@@ -90,7 +90,7 @@ table.
 
 ## 4. Appropriately label the data set with descriptive variable names.
 
-For this step we had to construct an array of the extracted feature
+For this step I had to construct an array of the extracted feature
 names and then add these names to the extracted data frame by assigning
 the column names via the names() function:
 
@@ -106,7 +106,7 @@ is now properly labeled.
 ## 5. Create a second, independent tidy data set with the average of each variable for each activity and each subject\#\# .
 
 The first task was to add the subjects to the extracted data set, as a
-separate data set (called dataset) using cbind():
+separate data set (called dataset), using cbind():
 
 ```r
             Subject <- c(subjects_train,subjects_test)
@@ -115,13 +115,13 @@ separate data set (called dataset) using cbind():
 
 For the next part, calculating the means of the extracted data for each
 combinatin of subject and activity, I made several attempts to use
-Rnfunctions that were discussed in thw Week 3 lectures but never really
-did feel comfortable with that approach. Therefore, I relied on the old
-tried and true method I've used for year, looping. In the following code
+R functions that were discussed in the Week 3 lectures, but never really
+felt comfortable with that approach. Therefore, I relied on the old
+tried and true method I've used for years, looping. In the following code
 block I loop through the data set and find the mean of each variable for
 each subject and each activity. I store the results in a new
 (initialized) data frame called newdata, renaming the variables to
-indicate that we are reporting their mean )see codebook.docx for a
+indicate that we are reporting their mean (see codebook.docx for a
 description of these variables).
 
 ```r
@@ -145,10 +145,10 @@ description of these variables).
             }
 ```
 
-The data frame newdata contained all the write values and at first I
+The data frame newdata contained all the right values and at first I
 attempted to write it to file as the final output in this form. However,
 the long variable names did not align well with the columns they
-represented so I was not happy with that result. Instead, used the melt
+represented so I was not happy with that result. Instead, I used the melt
 function from the reshape2 package to convert these into row names, and
 then output this as the final product (tidy\_mean.txt).
 
