@@ -5,9 +5,9 @@ Explanation of the steps in the run_analysis.R script
 The Getting and Cleaning Data course project requires students to create an R script called run_analysis.R to perform several steps leading to a final output of a tidy data set. This document explains some of the logic behind the script (see run_analysis.R in this github repository).
 
 
-1. Merge the training and the test sets in the UCI HAR database to create one data set.
+## 1. Merge the training and the test sets in the UCI HAR database to create one data set.
 
-The first step reads in the data from the local R working directory. It was the author's choice to read ALL the data needed by the script at one time even though only the training and test data were needed for this explicit step. This was done by first defining each file path and then executing the read.table commands. The variables defined here are used later in the script.
+The first step reads in the data from the local R working directory. I chose to read ALL the data needed by the script at one time even though only the training and test data were needed for this explicit step. This was done by first defining each file path and then executing the read.table commands. The variables defined here are used later in the script.
 
 ```
 	train_file <- "./UCI HAR Dataset/train/X_train.txt"
@@ -17,16 +17,16 @@ The first step reads in the data from the local R working directory. It was the 
 	activities_train_file <- "./UCI HAR Dataset/train/y_train.txt"
 	activities_test_file  <- "./UCI HAR Dataset/test/y_test.txt"
 	subject_train_file <- "./UCI HAR Dataset/train/subject_train.txt"
-        subject_test_file  <- "./UCI HAR Dataset/test/subject_test.txt"
+	subject_test_file  <- "./UCI HAR Dataset/test/subject_test.txt"
         
-        xtrain <- read.table(train_file)
-        xtest <- read.table(test_file)
-        features <- read.table(features_file)[,2]      
-        labels  <- read.table(labels_file)[,2]          
-        activities_train <- read.table(activities_train_file)[,1]
-        activities_test<- read.table(activities_test_file)[,1]
-        subjects_train <- read.table(subject_train_file)[,1]
-        subjects_test <- read.table(subject_test_file)[,1]
+	xtrain <- read.table(train_file)
+	xtest <- read.table(test_file)
+	features <- read.table(features_file)[,2]      
+	labels  <- read.table(labels_file)[,2]          
+	activities_train <- read.table(activities_train_file)[,1]
+	activities_test<- read.table(activities_test_file)[,1]
+	subjects_train <- read.table(subject_train_file)[,1]
+	subjects_test <- read.table(subject_test_file)[,1]
 ```      
 Note that all of the data columns are needed only for the training and test data files. For the rest, specific columns were extracted using R subsetting logic. Note also that the Samsung data is to be used as a machine learning project, where the objective is to predict activities by using the measurements. The convention often used is to use a capital X for the matrix of variables, and a lower case y for the vector of outcomes, in order to find the best prediction function f such as y=f(X).  Therefore, the activities derived from the data using SVM classification techniques are in the y_train.txt and y_test.txt files.
 
@@ -36,7 +36,7 @@ Since the data sets are already column-aligned by feature 1--> feature 561, all 
         merged <- rbind(xtrain,xtest)
 ```
 
-2. Extract only the measurements on the mean and standard deviation for each measurement. 
+## 2. Extract only the measurements on the mean and standard deviation for each measurement. 
 
 
 For this step I assumed that measurements of the mean are designated by "mean()" in the feature name and measurements of standard deviation (sigma) are designated by "std()" in the feature name. 
@@ -51,7 +51,7 @@ I use the grep() function to find the mean() and std() strings in the feature na
 ```
 
 
-3. Use descriptive activity names to name the activities in the data set
+## 3. Use descriptive activity names to name the activities in the data set
 
 For this step I need to merge the activities just as I did the data, then convert to descriptive labels and  add the labels as the first column in the data set using cbind() again:
 
@@ -63,7 +63,7 @@ For this step I need to merge the activities just as I did the data, then conver
 Note here that the activity data is just a series of ordinal numbers.  To convert to descriptive labels I used the labels variable as a 'lookup' table.
 
 
-4. Appropriately label the data set with descriptive variable names. 
+## 4. Appropriately label the data set with descriptive variable names. 
 
 For this step we had to construct an array of the extracted feature names and then add these names to the extracted data frame by assigning the column names via the names() function:
 ```        
@@ -71,10 +71,12 @@ For this step we had to construct an array of the extracted feature names and th
         names(extracted) <- c("Activity",variables)
 ```
 
+
 Note that in the last step I also had to add a column name for the activities column I added in the previous step. After this, each column is now properly labeled.
 
 
-5. Create a second, independent tidy data set with the average of each variable for each activity and each subject.
+
+## 5. Create a second, independent tidy data set with the average of each variable for each activity and each subject## .
 
 The first task was to add the subjects to the extracted data set, as a separate data set (called dataset) using cbind():
 ```
@@ -105,7 +107,9 @@ For the next part, calculating the means of the extracted data for each combinat
         }
 ```
 
+
 The data frame newdata contained all the write values and at first I attempted to write it to file as the final output in this form.  However, the long variable names did not align well with the columns they represented so I was not happy with that result. Instead, used the melt function from the reshape2 package to convert these into row names, and then output this as the final product (tidy_mean.txt).
+
 
 ```
         library(reshape2)
