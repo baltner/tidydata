@@ -148,7 +148,7 @@ description of these variables).
 The data frame newdata contained all the right values and at first I
 attempted to write it to file as the final output in this form. However,
 the long variable names did not align well with the columns they
-represented so I was not happy with that result. Instead, I used the melt
+represented (see newdata.txt in this repository) so I was not happy with that result. Instead, I used the melt
 function from the reshape2 package to convert these into row names, and
 then output this as the final product (tidy\_mean.txt).
 
