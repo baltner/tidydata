@@ -1,4 +1,4 @@
-Subject Activity Variable Name Value
+Subject Activity Variable.Name Value
 1 WALKING            Mean(tBodyAcc-mean()-X) 0.277330758736842
 1 WALKING_UPSTAIRS   Mean(tBodyAcc-mean()-X) 0.255461689622641
 1 WALKING_DOWNSTAIRS Mean(tBodyAcc-mean()-X) 0.289188320408163
